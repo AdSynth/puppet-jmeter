@@ -10,6 +10,7 @@ class jmeter(
   $jmeter_version         = '2.12',
   $jmeter_plugins_install = False,
   $jmeter_plugins_version = '1.2.0',
+  $jmeter_plugins = ['Standard'],
 ) {
 
   Exec { path => '/bin:/usr/bin:/usr/sbin' }
@@ -36,16 +37,8 @@ class jmeter(
   }
 
   if str2bool($jmeter_plugins_install) {
-    exec { 'download-jmeter-plugins':
-      command => "wget -P /root http://jmeter-plugins.org/files/JMeterPlugins-Standard-${jmeter_plugins_version}.zip",
-      creates => '/root/JMeterPlugins-Standard-${jmeter_plugins_version}.zip'
-    }
-
-    exec { 'install-jmeter-plugins':
-      command => "unzip -q -d JMeterPlugins JMeterPlugins-Standard-${jmeter_plugins_version}.zip && mv JMeterPlugins/lib/ext/JMeterPlugins-Standard.jar /usr/share/jmeter/lib/ext",
-      cwd     => '/root',
-      creates => '/usr/share/jmeter/lib/ext/JMeterPlugins-Standard.jar',
-      require => [Package['unzip'], Exec['install-jmeter'], Exec['download-jmeter-plugins']],
+    jmeter::plugin { $jmeter_plugins:
+      version => $jmeter_plugins_version,
     }
   }
 }
