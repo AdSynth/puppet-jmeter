@@ -19,6 +19,7 @@ class jmeter::server() {
     owner   => root,
     group   => root,
     mode    => 0755,
+    notify  => Service['jmeter'],
   }
 
   if $osfamily == 'debian' {
@@ -32,7 +33,6 @@ class jmeter::server() {
   service { 'jmeter':
     ensure    => running,
     enable    => true,
-    require   => File['/etc/init.d/jmeter'],
-    subscribe => [File['/etc/init.d/jmeter'], Exec['install-jmeter-plugins']],
   }
+  Jmeter::Plugin <| |> ~> Service['jmeter']
 }
