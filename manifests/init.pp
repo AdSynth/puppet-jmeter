@@ -7,9 +7,9 @@
 #   class { 'jmeter': }
 #
 class jmeter(
-  $jmeter_version         = '2.9',
+  $jmeter_version         = '2.12',
   $jmeter_plugins_install = False,
-  $jmeter_plugins_version = '1.0.0',
+  $jmeter_plugins_version = '1.2.0',
 ) {
 
   Exec { path => '/bin:/usr/bin:/usr/sbin' }
@@ -39,7 +39,7 @@ class jmeter(
     require => Exec['download-jmeter'],
   }
 
-  if $jmeter_plugins_install == True {  
+  if $jmeter_plugins_install == True {
     exec { 'download-jmeter-plugins':
       command => "wget -P /root http://jmeter-plugins.googlecode.com/files/JMeterPlugins-${jmeter_plugins_version}.zip",
       creates => '/root/JMeterPlugins-${jmeter_plugins_version}.zip'

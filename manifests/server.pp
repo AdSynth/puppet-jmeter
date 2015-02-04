@@ -6,7 +6,7 @@
 #
 #   class { 'jmeter::server': }
 #
-class jmeter::server($server_ip = '0.0.0.0') {
+class jmeter::server() {
   include jmeter
 
   $init_template = $osfamily ? {
