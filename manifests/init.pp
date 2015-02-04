@@ -37,14 +37,14 @@ class jmeter(
 
   if str2bool($jmeter_plugins_install) {
     exec { 'download-jmeter-plugins':
-      command => "wget -P /root http://jmeter-plugins.googlecode.com/files/JMeterPlugins-${jmeter_plugins_version}.zip",
+      command => "wget -P /root http://jmeter-plugins.googlecode.com/files/JMeterPlugins-Standard-${jmeter_plugins_version}.zip",
       creates => '/root/JMeterPlugins-${jmeter_plugins_version}.zip'
     }
 
     exec { 'install-jmeter-plugins':
-      command => "unzip -q -d JMeterPlugins JMeterPlugins-${jmeter_plugins_version}.zip && mv JMeterPlugins/JMeterPlugins.jar /usr/share/jmeter/lib/ext",
+      command => "unzip -q -d JMeterPlugins JMeterPlugins-Standard-${jmeter_plugins_version}.zip && mv JMeterPlugins/JMeterPlugins-Standard.jar /usr/share/jmeter/lib/ext",
       cwd     => '/root',
-      creates => '/usr/share/jmeter/lib/ext/JMeterPlugins.jar',
+      creates => '/usr/share/jmeter/lib/ext/JMeterPlugins-Standard.jar',
       require => [Package['unzip'], Exec['install-jmeter'], Exec['download-jmeter-plugins']],
     }
   }
