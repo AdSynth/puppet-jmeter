@@ -37,7 +37,7 @@ class jmeter(
 
   if str2bool($jmeter_plugins_install) {
     exec { 'download-jmeter-plugins':
-      command => "wget -P /root http://jmeter-plugins.googlecode.com/files/JMeterPlugins-Standard-${jmeter_plugins_version}.zip",
+      command => "wget -P /root http://jmeter-plugins.org/files/JMeterPlugins-Standard-${jmeter_plugins_version}.zip",
       creates => '/root/JMeterPlugins-${jmeter_plugins_version}.zip'
     }
 
