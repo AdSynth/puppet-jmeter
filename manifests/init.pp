@@ -23,10 +23,6 @@ class jmeter(
     ensure => present,
   }
 
-  package { 'unzip':
-    ensure => present,
-  }
-
   exec { 'download-jmeter':
     command => "wget -P /root http://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${jmeter_version}.tgz",
     creates => "/root/apache-jmeter-${jmeter_version}.tgz"
